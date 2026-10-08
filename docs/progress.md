@@ -35,3 +35,5 @@ Task4：complete。独立审查与修复记录见verification.md；安装ZIP、�
 Ruling：滚动到期等待从“等后续页更新”改为0.25秒间隔的单任务重试——真实宿主不发结束通知，原方案不能满足滚动阅读自动全刷——代价为有待刷新且持续滚动时每秒最多约4次检查；耗电仍需实机测试。菜单遮挡仍等待后续页面更新，不覆盖对话框。
 
 刷新Task4：complete。最终68项完整检查通过，8个产品Lua编译通过；新安装ZIP解压后执行同一套检查。原0.1.0 ZIP、核心算法/pipeline/settings保持，输入桌面原文件未修改。产物hash及固定源码、独立审查修复、安装验收范围见docs/refresh-verification.md。不安装、不发布、不推送，保留现有本地项目。
+
+2026-10-08独立发布：用户追加明确授权公开GitHub发布及琪琪市场发现。采用公开独立仓库+版本ZIP，main首次提交e17723f；GitHub仓库bailigebai/graydither.koplugin和v0.2.0 Release已上线。仅补发布元数据、安装/开发说明、公共路径与Git换行规则，灰度/刷新行为不改。琪琪市场按该账号公开.koplugin仓库动态发现，无需更改市场。源代码、Git候选导出、ZIP以及重新下载远端ZIP均68项通过，8Lua编译，独立发布审查放行。四项远端附件均与本地字节一致；详见publish-verification.md。设备安装仍由用户验收。
