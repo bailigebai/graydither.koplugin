@@ -1,6 +1,6 @@
 # 三插件灰度与全刷安装说明
 
-2026-10-08。本地设备测试版：GrayDither 0.3.0、MangaWeb 0.8.84、WebDAV漫画 0.4.16。三个安装包已完成软件检查，尚未发布本轮GitHub版本。两个内置阅读器的灰度与自动全刷均默认关闭，可分别开启、关闭，设置互不影响。
+2026-10-08。本轮设备测试版：GrayDither 0.3.0、MangaWeb 0.8.84、WebDAV漫画 0.4.16。三个安装包已完成软件检查。两个内置阅读器的灰度与自动全刷均默认关闭，可分别开启、关闭，设置互不影响。下载对应[GrayDither](https://github.com/bailigebai/graydither.koplugin/releases/tag/v0.3.0)、[MangaWeb](https://github.com/bailigebai/mangaweb.koplugin/releases/tag/v0.8.84)、[WebDAV漫画](https://github.com/bailigebai/webdavmanga.koplugin/releases/tag/v0.4.16)的Release附件。
 
 ## 安装三个插件
 
@@ -53,6 +53,6 @@ GrayDither 106项检查、MangaWeb 40组规格、WebDAV 193组规格及687项真
 
 ## 琪琪市场
 
-本轮三个新版本尚未公开发布，因此市场暂时仍显示既有公开版本。发布后，在“qiqi 应用商店”联网点击“刷新缓存”，按graydither、mangaweb、webdavmanga查找并选择对应插件ZIP。市场读取bailigebai账号下的公开.koplugin仓库和Release，无需新增收录名单。
+在“qiqi 应用商店”联网点击“刷新缓存”，按graydither、mangaweb、webdavmanga查找并选择上述对应版本的插件ZIP。市场读取bailigebai账号下的公开.koplugin仓库和Release，无需新增收录名单。若还显示旧版本，先确认联网后再刷新缓存。
 
 graydither-test.cbz是测试漫画，sample-preview.png是预览图，两者不是插件安装包。manifest.json记录三个安装包及测试素材的SHA-256校验值。

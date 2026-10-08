@@ -1,6 +1,6 @@
 # 内置漫画阅读器兼容版验收
 
-2026-10-08。本轮采用已批准的共用核心方案。当前为本地设备测试包：GrayDither 0.3.0、MangaWeb 0.8.84、WebDAV漫画0.4.16。未安装设备、未发布这三个新版本，也未访问真实漫画网站或用户的WebDAV。
+2026-10-08。本文件为发布前软件验收记录，本轮采用已批准的共用核心方案：GrayDither 0.3.0、MangaWeb 0.8.84、WebDAV漫画0.4.16。记录时三个新版本尚未发布；未安装设备，也未访问真实漫画网站或用户的WebDAV。发布安装包的最终校验值以Release附件及统一交付目录的manifest.json为准。
 
 ## 实际改动
 
@@ -55,7 +55,7 @@ python scripts/run_graydither_contract.py --gray-root ../gray --plugin-root ./ex
 
 GrayDither严格13文件：10Lua及README/LICENSE/THIRD_PARTY；MangaWeb严格71文件；WebDAV严格124文件且原官方native库不变。三个包均检查单一.koplugin根、CRC、SHA256及每项源字节；源码测试和安装包模块分开选择，防止只测工作树却交付旧文件。
 
-本次GrayDither最终包36996字节，SHA256 `83af3565a093b388e5bca832d2be957e014449685998d435cfb6ca88ad011cb1`；三包完整清单以统一交付目录的manifest.json为准。原公开0.2.0及此前回退包未被覆盖。
+发布前首次验收包：GrayDither 36996字节，SHA256 `83af3565a093b388e5bca832d2be957e014449685998d435cfb6ca88ad011cb1`。用户授权发布后仅整理下载说明并重构建，再核对发布包字节；最终三包完整清单以统一交付目录的manifest.json及Release附件为准。原公开0.2.0及此前回退包不覆盖。
 
 ## 用户验收与未覆盖范围
 

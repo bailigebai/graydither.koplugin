@@ -6,7 +6,7 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 0.3.0新增MangaWeb与WebDAV漫画内置阅读器接入。两个阅读器各自保存“灰度抖动”和“自动全刷”开关，**默认都关闭**，互不影响，也不继承本插件的全局开关。图片在最终缩放后处理，算法和刷新流程由本插件统一提供。
 
-项目：[bailigebai/graydither.koplugin](https://github.com/bailigebai/graydither.koplugin)。公开下载：[Releases](https://github.com/bailigebai/graydither.koplugin/releases)。0.3.0本轮安装包先完成本地验收，再发布到GitHub；公开列表以实际发布为准。
+项目：[bailigebai/graydither.koplugin](https://github.com/bailigebai/graydither.koplugin)。0.3.0设备测试版下载：[GitHub Release](https://github.com/bailigebai/graydither.koplugin/releases/tag/v0.3.0)。安装时选择graydither-0.3.0.zip；旧版下载保留在[Releases](https://github.com/bailigebai/graydither.koplugin/releases)。
 
 ## 通过琪琪市场安装
 
