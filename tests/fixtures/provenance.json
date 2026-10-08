@@ -1,0 +1,92 @@
+[
+  {
+    "file": "tests/fixtures/base/ffi/blitbuffer.lua",
+    "url": "https://raw.githubusercontent.com/koreader/koreader-base/9e9befc73f494556e2ff0732940e84fa9d0b6dac/ffi/blitbuffer.lua",
+    "commit": "9e9befc73f494556e2ff0732940e84fa9d0b6dac",
+    "sha256": "62f974ea2aa14fe9e5d44751578132672099b37ed7b1d64c800a467711f7356b"
+  },
+  {
+    "file": "tests/fixtures/base/COPYING",
+    "url": "https://raw.githubusercontent.com/koreader/koreader-base/9e9befc73f494556e2ff0732940e84fa9d0b6dac/COPYING",
+    "commit": "9e9befc73f494556e2ff0732940e84fa9d0b6dac",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+  },
+  {
+    "file": "tests/fixtures/koreader/document.lua",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/document/document.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "sha256": "fbc8a11e4a5321c4b86742f9d699839a56ebe125edf6030f85f8ef57789c4129"
+  },
+  {
+    "file": "LICENSE",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/COPYING",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+  },
+  {
+    "file": "tests/fixtures/koreader/COPYING",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/COPYING",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "sha256": "57c8ff33c9c0cfc3ef00e650a1cc910d7ee479a8bc509f6c9209a7c2a11399d6"
+  },
+  {
+    "file": "tests/fixtures/koreader/koptinterface.lua",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/document/koptinterface.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "sha256": "6e1df97a2dd655dd31030447d87ff671fa3ff3f74bfbb3b535018c0180d205f4"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/optmath.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/optmath.lua",
+    "sha256": "bb630c2db62d468bf4bf59fb3347515481262696891b51e577390f099bfacdca"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/event.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/event.lua",
+    "sha256": "d03efff829c3bb4ad5208d0273ac80641e4e894d314c928d3050587edb4541f4"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/geometry.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/geometry.lua",
+    "sha256": "830f8a8cc3f5e23abb9384f23befa532d52e792325182efc91fd0607d79157b9"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/hook_container.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/hook_container.lua",
+    "sha256": "0d3d5a3359199cf60ed6b1af7e765cf9c51399650002e3348c015f9b27d14605"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/uimanager.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/uimanager.lua",
+    "sha256": "6c90eca8549ec887b806e0806949bdbe6d3ce8b6d774989ade38a13a168dcc25"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/widget/eventlistener.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/widget/eventlistener.lua",
+    "sha256": "0418358ed648cf55576523dc8d78f9ad8544a4e93e041675604545a9e2440e3a"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/widget/widget.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/widget/widget.lua",
+    "sha256": "4050d6717983781edea1a7ff791a50054a57a7d185dc02f5ab70af64793e8277"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/widget/container/widgetcontainer.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/widget/container/widgetcontainer.lua",
+    "sha256": "ece7f08f6bab459338b12f3d568c0cf9dcbcdbf98912129026b338818f828d39"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/apps/reader/modules/readerrolling.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/apps/reader/modules/readerrolling.lua",
+    "sha256": "4af978e7d81fa91d8f3a93096b9c656edf0a7c47078a305ea35ac87d9d72d68c"
+  }
+]

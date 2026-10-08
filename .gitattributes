@@ -1,0 +1,4 @@
+* text=auto eol=lf
+# Fixed fixture hashes must remain byte-for-byte identical on every platform.
+tests/fixtures/** -text
+tests/fixtures/provenance.json text eol=lf
