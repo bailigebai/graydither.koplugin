@@ -28,12 +28,26 @@ end
 
 test("menu registers and default global is off",function()
     local plugin,doc,ui,source=new_plugin()
-    eq(ui.menu.plugin,plugin);eq(plugin.is_doc_only,true)
+    eq(ui.menu.plugin,plugin);eq(plugin.is_doc_only,false)
     local menu={};plugin:addToMainMenu(menu)
     assert(menu.graydither);eq(menu.graydither.sub_item_table[1].checked_func(),false)
     eq(plugin:onReaderReady(),nil)
     eq(plugin.preferences:isEnabled(),false)
     plugin:onCloseDocument();source:free()
+end)
+
+test('FileManager can provide independent image sessions without a document',function()
+    G_reader_settings=store();local ui={menu={}}
+    function ui.menu:registerToMainMenu(plugin)self.plugin=plugin end
+    Support.reset(ui)
+    local Class=dofile(TEST_PLUGIN..'/main.lua');local plugin=Class:new{ui=ui}
+    local owner={};Support.reset(owner)
+    local local_store=store();local s=plugin:createImageSession{owner=owner,store=local_store}
+    eq(s.preferences:isEnabled(),false);eq(plugin.is_doc_only,false)
+    local image={getSize=function()return{w=1,h=1}end,paintTo=function()end}
+    local original=image.paintTo;s:attachImage(image,'one')
+    plugin:stopPlugin();eq(s.closed,true);eq(image.paintTo,original)
+    eq(plugin:createImageSession{owner=owner,store=local_store},nil)
 end)
 
 test("per document force on works while global is disabled",function()

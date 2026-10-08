@@ -25,10 +25,10 @@ local function valid_page(page)
         and page ~= math.huge and page == math.floor(page)
 end
 
-function Refresh.new(reader_ui, preferences, on_error)
+function Refresh.new(reader_ui, preferences, on_error, is_ready)
     return setmetatable({ reader = reader_ui, preferences = preferences,
         on_error = on_error, generation = 0, count = 0, completed = 0,
-        active = false, busy = false, suspended = false }, Refresh)
+        active = false, busy = false, suspended = false, is_ready = is_ready }, Refresh)
 end
 
 function Refresh:_report(error_value)
@@ -84,7 +84,15 @@ function Refresh:resume(page)
     if valid_page(page) then self.last_page = page end
 end
 
+function Refresh:_ready()
+    if not self.is_ready then return true end
+    local ok, ready = pcall(self.is_ready)
+    if not ok then self:_report(ready) end
+    return ok and ready == true
+end
+
 function Refresh:_blocked()
+    if not self:_ready() then return "not_ready" end
     if UIManager.currently_scrolling then return "scrolling" end
     local reader = self.reader.dialog or self.reader
     if UIManager:getTopmostVisibleWidget() ~= reader then return "covered" end
@@ -96,7 +104,7 @@ function Refresh:_queue(delay, action)
     callback = function()
         if generation ~= self.generation then return end
         self.task = nil
-        if not self.active or self.suspended
+        if not self.active or self.suspended or not self:_ready()
             or (self.automatic and not self.preferences:getEnabled()) then
             self:reset()
             return
@@ -138,12 +146,18 @@ function Refresh:_flash(hold)
         self.layer.color = BB.COLOR_WHITE
         UIManager:setDirty(self.layer, "full")
         UIManager:forceRePaint()
-        self:_queue(hold, function() self:_finish() end)
+        self:_queue(hold, function()
+            if UIManager.currently_scrolling or UIManager:getTopmostVisibleWidget() ~= self.layer then
+                self:cancel()
+                return
+            end
+            self:_finish()
+        end)
     end)
 end
 
 function Refresh:request(automatic)
-    if not self.active or self.suspended or self.busy then return false end
+    if not self.active or self.suspended or self.busy or not self:_ready() then return false end
     if self.layer then
         self:cancel()
         if self.layer then return false end

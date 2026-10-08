@@ -36,7 +36,7 @@
 
 - `attachImage(widget, token)`：token为当前会话内稳定字符串，不含凭据；仅包装该实例。每次正文重建或模型更新重新调用，同实例可更新token。
 - `settingsChanged()`：取消流程、重建计数基准并重绘；写入操作先成功保存再调用。
-- `pause()`：取消、停止计数；`resume()`重建首屏基准；`reset()`取消并重建基准；`close()`幂等撤销包装及流程。
+- `pause(preserve_progress)`：取消、停止计数；默认false重建首屏基准，短暂加载用true保留成功屏的token及计数。`resume()`按该暂停状态恢复；`reset()`取消并重建基准；`close()`幂等撤销包装及流程，公开closed布尔。
 - `isRefreshManaged() -> boolean`：只有会话活着、未暂停且本插件自动开关true时为true。
 - `requestRefresh() -> boolean`：手动请求；在调用前源UI需返回实际阅读画面。
 - `getMenuItems() -> table`：KOReader菜单条目，灰度开关及现有刷新子菜单；保存经会话偏好完成。

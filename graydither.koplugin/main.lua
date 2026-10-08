@@ -7,12 +7,13 @@ local Settings = require("graydither.settings")
 local Refresh = require("graydither.refresh")
 local RefreshSettings = require("graydither.refreshsettings")
 local RefreshMenu = require("graydither.refreshmenu")
+local ImageSession = require("graydither.imagesession")
 local logger = require("logger")
 local _ = require("gettext")
 
 local GrayDither = WidgetContainer:extend{
     name = "graydither",
-    is_doc_only = true,
+    is_doc_only = false,
 }
 
 local reasons = {
@@ -34,12 +35,28 @@ local function current_page(ui)
 end
 
 function GrayDither:init()
+    self.image_sessions = setmetatable({}, { __mode = "k" })
+    self.stopped = false
     self.preferences = Settings.new(G_reader_settings, self.ui.doc_settings)
     self.refresh_preferences = RefreshSettings.new(G_reader_settings)
     self.refresher = Refresh.new(self.ui, self.refresh_preferences,
         function(err) logger.warn("graydither refresh failed:", err) end)
     self.attach_reason = "reader_not_ready"
     self.ui.menu:registerToMainMenu(self)
+end
+
+function GrayDither:createImageSession(options)
+    if self.stopped then return nil end
+    local session = ImageSession.new(options)
+    self.image_sessions[session] = true
+    return session
+end
+
+function GrayDither:stopPlugin()
+    self.stopped = true
+    self:onCloseDocument()
+    for session in pairs(self.image_sessions) do session:close() end
+    self.image_sessions = setmetatable({}, { __mode = "k" })
 end
 
 function GrayDither:onReaderReady()
