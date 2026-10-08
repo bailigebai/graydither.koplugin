@@ -8,7 +8,7 @@
 
 - [KOReader](https://github.com/koreader/koreader)，固定提交646b2e39e24a899016d38ef6dc47e3f7c429c8ba，仓库COPYING为AGPLv3。
 - [koreader-base](https://github.com/koreader/koreader-base)，固定子模块9e9befc73f494556e2ff0732940e84fa9d0b6dac，仓库COPYING为AGPLv3；具体文件声明仍按文件本身。
-- tests/fixtures包含未经修改的BlitBuffer、Document、KoptInterface及UIManager、Widget、Event、Geom、ReaderRolling等源码和许可文本，仅用于本地合同检查，不进入安装ZIP。
+- tests/fixtures包含未经修改的BlitBuffer、Document、KoptInterface及UIManager、ImageWidget、Widget、Event、Geom、ReaderRolling等源码和许可文本，仅用于本地合同检查，不进入安装ZIP。
 - 来源URL及SHA-256见tests/fixtures/provenance.json。源码保留原有头部；它们不归本项目作者所有。
 - Windows测试仅对OS声明、工具函数和未执行的UI／解码依赖提供测试桩；不改变fixture源码，原生C blitter关闭。
 
@@ -28,3 +28,5 @@ GitHub源码仓库保留上述来源、完整许可文本与fixture来源清单�
 本项目参考其手动刷新、自动间隔和黑白保持的功能，独立编写普通.koplugin配置、控制器及菜单。不复制原补丁、全局hook实现或作者二维码，不把无许可原文件纳入AGPL安装包。原作者归属按输入材料保留在本说明中；来源事实不等于再许可授权。
 
 刷新合同参考[固定UIManager源码](https://github.com/koreader/koreader/blob/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/uimanager.lua)、[Android适配](https://github.com/koreader/koreader/blob/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/device/android/device.lua)及[固定WidgetContainer事件传播](https://github.com/koreader/koreader/blob/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/widget/container/widgetcontainer.lua)。本地测试对Screen和时钟提供替身，不能验证物理波形或残影。
+
+内置漫画接入依据[MangaWeb](https://github.com/bailigebai/mangaweb.koplugin)固定aa7698e3439a37c4cb600103039f3f7cc6c65925和[WebDAV漫画](https://github.com/bailigebai/webdavmanga.koplugin)固定57151d385d6cbd71e1fce4cb92864f0507bf1aab的真实阅读窗口与设置接口。安装包不捆绑两个来源插件、它们的授权材料或测试素材；它们各自升级一个小桥接，共用本项目算法和刷新流程。

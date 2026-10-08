@@ -56,3 +56,11 @@ test('real dismiss handler closes its common dialog exactly once',function()
     local s,owner,paint,close=setup('native');paint('one');s:showMenu()
     local dialog=s.menu;dialog:onClose();eq(dialog.closes,1);eq(UI:getTopmostVisibleWidget(),owner);close()
 end)
+test('real host destroying the owner cancels queued black and white phases',function()
+    for _,delay in ipairs({0,0.1})do
+        local s,owner,paint,close=setup('flash');paint('one');paint('two');Host.at(delay)
+        UI:close(owner);Host.at(0.2)
+        eq(s.refresher.layer,nil);eq(#UI._window_stack,0);eq(#UI._task_queue,0)
+        eq(s.refresher.completed,0);close()
+    end
+end)

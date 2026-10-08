@@ -89,7 +89,14 @@ function Pipeline.attach(widget,is_enabled,on_painted,on_error)
             if receiver==widget then notify() end
             return unpack(result,1,result.n)
         end
-        if not controller.active or receiver~=widget or controller.busy or widget.hide or not is_enabled() then return plain() end
+        if not controller.active or receiver~=widget or controller.busy or widget.hide then return plain() end
+        local checked,enabled=pcall(is_enabled)
+        if not checked then
+            controller.last_reason,controller.last_error='processing_failed',tostring(enabled)
+            if on_error then pcall(on_error,controller.last_error) end
+            return plain()
+        end
+        if enabled~=true then return plain() end
         local scratch,preserved
         controller.busy=true
         local ok,result=pcall(function()

@@ -1,15 +1,23 @@
-# SDD ledger — plan: docs/superpowers/plans/2026-10-08-external-readers-plan.md
+# 内置阅读器接入执行记录
 
-2026-10-08：用户确认计划开始，采用已确认A和每源两开关默认false。工作树gray/mangaweb/webdav隔离，原工作区不变。桌面原生worktree工具返回Not a git repository（聊天cwd不是repo），因此用git worktree fallback；路径全部位于原gray仓库ignored的.test-output/compat-work。
+2026-10-08。用户确认计划并要求开始，执行已批准的方案A：三个插件共用GrayDither核心，两个来源各自保存灰度与自动全刷开关，默认false。设计与实施计划见本目录superpowers/specs和superpowers/plans；完整验收见external-readers-verification.md。
 
-Pre-flight：Task1.attach→Task2.attachImage；Task2会话→Task3/4同名方法，store键约定一致。Task3/4互不共享产品文件。Task5依赖所有运行实现后做合同检查。
+## 隔离与范围
 
-Ruling：用户已明确“确认计划 开始”，保留已授权的执行方式，补齐实施细节后连续推进，不重复请求已批准的设计/执行授权。发布三个新版本仍在具体包完成后单独核对授权与影响。
+三个独立工作树位于原仓库忽略的.test-output/compat-work/{gray,mangaweb,webdav}。聊天目录不是Git仓库，原生worktree工具返回Not a git repository后使用git worktree创建。原桌面全刷补丁、原工作区、设备、私人WebDAV与真实网站均未修改或访问。用户已批准实施，无需重复确认设计或执行；新公开版本在具体安装包完成后单独确认。
 
-Task1: 完成私有正文ROI接入。6项单元测试先因缺模块失败；真实ImageWidget 14项合同曾复现正半像素少画一列与night处理失败，定位后修复，合同通过。原缓存与源alpha不变，仅实例包装，不改Screen标记；测试CBB关闭、MuPDF缩放入口受控替代，尚无真机证据。
-Task2: 实现并通过初步测试。9项会话用例先因缺模块失败，FileManager入口用例先因缺服务方法失败；完整98项通过、10Lua编译通过。补充真实UI调度及菜单清理合同、独立审查仍进行。
-Task3: 源代理实施，原38项纯合成基准通过，相关阅读回归及新默认false/存储/生命周期用例通过；准备实际Session联测。
-Task4: 源代理实施，公开0.4.15完整基准192套件/107Lua通过。初次缺KOReader宿主，另一次CRC耗时3.101s超3s；原阈值定向及全套复跑通过，未放宽。新接入63项检查及完整回归进行。
-Task5: 新上下文独立审查已启动。三仓库接口联测、版本及设备测试ZIP尚未完成，未发布新的接入版本。
+## 已完成阶段
 
-契约补充：逐页下载的短暂loading如果每次清零计数，会永远无法触发自动全刷。因此pause(true)仅取消等待/阶段并暂停计数，保留最后成功屏和count；设置/休眠用默认pause()重建基准。根已通知两个源实现者并新增loading累计回归。source可通过session.closed判断Gray服务停用，恢复原阅读策略。
+- Task1：正文私有ROI绘制接入。先复现缺模块失败；固定官方ImageWidget合同复现半像素居中少一列和夜间处理失败，修复后14项合同通过。保留原缓存与alpha，仅包装正文实例，不改Screen或全局UI类。
+- Task2：独立会话、文件管理器服务入口与公共设置。初始会话和入口规格先失败；最终106项检查、10个产品Lua编译通过，含真实UIManager/ImageWidget会话合同5项。短暂加载pause(true)保留成功屏token/count与正文灰度，设置和休眠重建基准；关闭撤销包装与排队阶段。
+- Task3：MangaWeb接入提交55dded9、45fc12f、4ed1fe1。修复旧配置中默认false被表达式丢失及保存拒绝漏报。源码和实际安装文件各40组规格通过；公开仓库保存10组，其余30组原有纯合成基线保留在工作树外。源码78Lua、产品67Lua语法通过，打包4项及测试入口3项通过。
+- Task4：WebDAV接入提交a874459、be4799688f90c9d7a4d1b066cfab0fe6c88926f0。源码和实际安装文件各193组规格、108个运行Lua通过；实际源阅读器与共用核心各687项正文联测通过。修复成功分格相机标识、当帧接管失败恢复、宿主CloseWidget和长条下载暂停。原主线基准192组/107Lua保留。
+- Task5：新上下文独立审查完成，重要发现均先失败复现再修复；最终复查未发现本范围功能阻塞。三个版本和安装包已准备，源码字节、单一插件根、文件名单、CRC与SHA256通过，均以解压产品执行检查；安装说明与统一交付清单已整理。
+
+## 交付与边界
+
+本地安装版本为GrayDither 0.3.0、MangaWeb 0.8.84、WebDAV漫画0.4.16，严格文件数13/71/124。软件验收完成，Kindle/Android/鸿蒙真机画质、触控、光学灰阶、波形、残影及性能待用户验收；不提供HarmonyOS NEXT HAP，不把软件16级抖动称为硬件256级灰度。
+
+原WebDAV CRC规格在并行负载下两次超过既有3秒预算，原实现与阈值不变，固定主线、定向及最终完整重跑均通过。两项旧规格误从安装目录寻找开发夹具，已明确分开测试根与产品根，夹具不入包。
+
+新版本尚未公开发布。原公开GrayDither 0.2.0及历史包保留；发布三个现有公开仓库及对应Release须按用户AGENTS第9条确认后执行。琪琪市场按公开账号仓库和Release读取，只有发布后刷新缓存才可发现新版本。

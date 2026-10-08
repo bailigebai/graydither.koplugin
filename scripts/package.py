@@ -14,6 +14,12 @@ PLUGIN = ROOT/"graydither.koplugin"
 DIST = ROOT/"dist"
 VERSION = re.search(r'\bversion\s*=\s*"(\d+\.\d+\.\d+)"',
                     (PLUGIN/"_meta.lua").read_text(encoding="utf-8")).group(1)
+RUNTIME_FILES = {
+    "main.lua", "_meta.lua", "README.md", "LICENSE", "THIRD_PARTY.md",
+    *{"graydither/"+name+".lua" for name in (
+        "algorithm", "pipeline", "settings", "refresh", "refreshsettings",
+        "refreshmenu", "imagepipeline", "imagesession")},
+}
 
 def chunk(kind, data):
     return struct.pack(">I", len(data))+kind+data+struct.pack(">I", zlib.crc32(kind+data)&0xffffffff)
@@ -49,6 +55,8 @@ def main():
     for name in ("README.md","LICENSE","THIRD_PARTY.md"):
         shutil.copyfile(ROOT/name,PLUGIN/name)
     DIST.mkdir(exist_ok=True)
+    actual = {p.relative_to(PLUGIN).as_posix() for p in PLUGIN.rglob("*") if p.is_file()}
+    assert actual == RUNTIME_FILES, "Unexpected or missing plugin files: "+str(actual ^ RUNTIME_FILES)
     archive=DIST/f"graydither-{VERSION}.zip"
     with ZipFile(archive,"w",ZIP_DEFLATED) as z:
         for file in sorted(PLUGIN.rglob("*")):

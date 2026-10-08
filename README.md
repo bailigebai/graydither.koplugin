@@ -1,16 +1,18 @@
-# 漫画灰度与墨水屏刷新 0.2.0
+# 漫画灰度与墨水屏刷新 0.3.0
 
 KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供Floyd–Steinberg空间抖动，把256个输入亮度映射为16个输出灰阶。可改善某些图片的渐变观感，不代表屏幕拥有原生256灰阶。
 
-0.2.0新增独立“墨水屏刷新”菜单：手动全刷、每1～50次页面变化自动全刷，以及可选黑白辅助刷新。灰度和刷新分别开关；EPUB／PDF等文档可使用刷新功能。
+支持手动全刷、每1～50次页面变化自动全刷，以及可选黑白辅助刷新。灰度和刷新分别开关；EPUB／PDF等原生文档可使用刷新功能。
 
-项目：[bailigebai/graydither.koplugin](https://github.com/bailigebai/graydither.koplugin)。下载：[v0.2.0设备测试版](https://github.com/bailigebai/graydither.koplugin/releases/tag/v0.2.0)。
+0.3.0新增MangaWeb与WebDAV漫画内置阅读器接入。两个阅读器各自保存“灰度抖动”和“自动全刷”开关，**默认都关闭**，互不影响，也不继承本插件的全局开关。图片在最终缩放后处理，算法和刷新流程由本插件统一提供。
+
+项目：[bailigebai/graydither.koplugin](https://github.com/bailigebai/graydither.koplugin)。公开下载：[Releases](https://github.com/bailigebai/graydither.koplugin/releases)。0.3.0本轮安装包先完成本地验收，再发布到GitHub；公开列表以实际发布为准。
 
 ## 通过琪琪市场安装
 
 1. 在KOReader打开“qiqi 应用商店”，联网后点“刷新缓存”。
 2. 搜索`graydither`，找到“漫画灰度与墨水屏刷新”。
-3. 打开项目详情，选择发布版本`v0.2.0`及附件`graydither-0.2.0.zip`安装。
+3. 打开项目详情，选择已发布版本及其`graydither-版本号.zip`附件安装。
 4. 安装完成后完全退出并重启KOReader，再按下方说明开启功能。
 
 [琪琪市场](https://github.com/bailigebai/qiqiappstore.koplugin)读取bailigebai账号下名称以`.koplugin`结尾的公开仓库，无需单独维护收录名单。首次手动安装本插件后，也先刷新市场缓存再检查更新。测试漫画`graydither-test.cbz`是验收用书，不是插件安装包。
@@ -31,7 +33,7 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 ## 安装
 
-1. 解压graydither-0.2.0.zip，得到graydither.koplugin文件夹。
+1. 解压graydither-0.3.0.zip，得到graydither.koplugin文件夹。
 2. 将整个文件夹放进当前KOReader数据目录的plugins文件夹，不要再多套一层目录。
 3. 重启KOReader，打开CBZ／CBR漫画。
 4. 在阅读菜单“工具 → 更多工具 → 漫画灰度抖动”中选择“本书：开启”。
@@ -45,9 +47,22 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 如果菜单位置因宿主版本不同有所变化，可在工具菜单查找“漫画灰度抖动”。插件实际搜索目录可以从启动日志“Looking for plugins in directory:”确认。
 
-从0.1.0升级时覆盖原graydither.koplugin目录，然后重启KOReader。如果设备已经安装2-eink-full-refresh.lua原补丁，退出KOReader后将它移出patches目录，再使用整合版，避免两个自动流程同时生效。桌面原文件不受本项目修改。
+从旧版升级时覆盖原graydither.koplugin目录，然后重启KOReader。如果设备已经安装2-eink-full-refresh.lua原补丁，退出KOReader后将它移出patches目录，再使用整合版，避免两个自动流程同时生效。桌面原文件不受本项目修改。
 
 设置与KOReader一起保存：全局G_reader_settings和每本书DocSettings分别使用graydither_enabled。插件不创建文件名映射或自己的路径配置。
+
+## 两个漫画插件的内置阅读器
+
+接入版本：GrayDither 0.3.0、[MangaWeb](https://github.com/bailigebai/mangaweb.koplugin) 0.8.84、[WebDAV漫画](https://github.com/bailigebai/webdavmanga.koplugin) 0.4.16。同时安装三个版本的插件文件夹后，完全退出并重启KOReader，在插件管理里启用它们。只更新GrayDither不能为旧版内置阅读器增加设置入口。
+
+1. 通过漫画插件原来的入口打开漫画，在它自己的阅读设置中打开“灰度与全刷”。
+2. “启用漫画灰度抖动”和“启用自动全刷”可以分别开启／关闭；首次进入均未勾选。
+3. 在“墨水屏刷新”里选择间隔、原生／黑白辅助及保持时间。点击“立即全刷”会先返回正文，自动开关关闭时也可手动使用。
+4. 另一个漫画插件的开关和参数保持独立。退出重开后保留各自选择。
+
+仅正文图片经过灰度处理，工具栏、设置、加载提示与封面预加载不处理、不计数。按成功显示的不同阅读屏累计：包括源插件已实现的分片、平移、长条定位和分格视图；没有增加或修复源插件原有显示模式。首次和同屏重复重绘不计。短暂下载暂停但保留已成功显示的计数；设置、休眠和旋转重新建立基准。
+
+WebDAV自动全刷由本插件接管时，临时停用原每页全刷和翻页动画以避免叠加；原来的设置值保留，关闭本功能或服务不可用时恢复原策略。缺少／禁用GrayDither仍能按原方式阅读，设置入口会提示服务不可用。原生书籍设置与两个漫画来源设置分开保存。
 
 ## 墨水屏刷新使用方法
 
@@ -68,7 +83,7 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 ## 支持条件
 
-本版只处理MuPDF固定页面的CBZ／CBR。要求：
+原生书籍灰度只处理MuPDF固定页面的CBZ／CBR。要求：
 
 - 关闭重排（text_wrap=0）。
 - 页面优化关闭（page_opt为0或未设置）。
@@ -79,9 +94,9 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 - 请求区域宽高不超过8192，像素总数不超过8 Mi。
 - 目标屏幕缓冲为BB8或RGB32。
 
-其他情况沿用原绘制，并在状态中说明原因。小数源区域、负小数目的坐标或需要目标边界裁剪的小数坐标会跳过。正常居中的半像素目的坐标按宿主规则向下取整，不改变绘制尺寸。EPUB、普通PDF、DJVU、CBT／CB7及图片浏览器不属于首期支持范围。
+其他情况沿用原绘制，并在状态中说明原因。小数源区域、负小数目的坐标或需要目标边界裁剪的小数坐标会跳过。正常居中的半像素目的坐标按宿主规则向下取整，不改变绘制尺寸。EPUB、普通PDF、DJVU及宿主图片浏览器不接入原生灰度；漫画插件能成功解码并显示的正文图片可通过新的会话接口处理，不受原生CBZ／CBR文件后缀限制。
 
-灰度功能暂时关闭当前页面调用中的原生软件抖动，调用结束后恢复原值；硬件抖动与波形继续由宿主控制。额外全刷只由独立刷新功能请求。最终硬件处理效果需要真机对照，不承诺显示链路只处理一次。
+原生文档路径暂时关闭该文档当前调用中的软件抖动，结束后恢复原值。内置漫画路径仅将正文实例的目标绘制路由到私有缓冲，避免先软件抖动再FS，不改全局屏幕标记。硬件抖动与波形继续由宿主控制。额外全刷只由独立刷新功能请求。最终硬件处理效果需要真机对照，不承诺显示链路只处理一次。
 
 ## 最简单的验收
 
@@ -112,7 +127,7 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 ## 验证范围
 
-0.2.0本地68项自动检查通过，8个产品Lua文件可编译。保留灰度算法的192个裁剪组合、192个小数居中组合及适页尺寸例子；新增配置、计数、延时、错误清理和插件事件测试，并使用固定真实UIManager、Widget、Event、Geom及ReaderRolling松手方法验证刷新合同。Screen／时钟与MuPDF解码使用替身，Windows测试关闭原生C blitter。最终安装ZIP解压后也执行同一完整套件，证据见docs/refresh-verification.md。
+保留0.2.0的原生灰度与刷新回归，新增正文ImageWidget、来源会话及真实UIManager联测。Screen／时钟、MuPDF解码和缩放入口使用受控替身，Windows测试关闭原生C blitter；固定ImageWidget、Widget、Event、Geom及BlitBuffer源码保持原样。最新数量与安装包解压验证以docs/external-readers-verification.md为准；历史0.2.0证据见docs/refresh-verification.md。
 
 源码核对版本：
 

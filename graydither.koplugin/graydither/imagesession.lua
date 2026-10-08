@@ -48,7 +48,9 @@ function Session:attachImage(widget,token)
     if entry then entry.token=token;return true end
     entry={token=token}
     entry.controller=assert(ImagePipeline.attach(widget,function()
-        return not self.closed and not self.paused and self.preferences:isEnabled()
+        -- Pausing counting/refresh must not change the retained body while a
+        -- foreground download or a small controls dialog covers the reader.
+        return not self.closed and self.preferences:isEnabled()
     end,function()
         if not self:_ready() or UIManager:getTopmostVisibleWidget()~=self.owner then return end
         if self.last_token~=entry.token then
@@ -68,6 +70,7 @@ end
 
 function Session:settingsChanged()
     if self.closed then return end
+    self.last_error=nil
     self:reset()
     if self.options.redraw then self:_run(self.options.redraw) end
 end
@@ -100,8 +103,12 @@ end
 function Session:_closeWidget(widget)
     self.widgets[widget]=nil
     if self.menu==widget then self.menu=nil end
-    local ok,err=pcall(UIManager.close,UIManager,widget)
-    if not ok then self.widgets[widget]=true;self:_report(err) end
+    for _=1,2 do
+        local ok,err=pcall(UIManager.close,UIManager,widget)
+        if ok then return end
+        self:_report(err)
+    end
+    self.widgets[widget]=true
 end
 
 function Session:_closeControls()
@@ -154,6 +161,7 @@ function Session:getMenuItems()
             on_change=function()self:settingsChanged()end,
             request=function()self:_returnToReading();self:requestRefresh()end,
             can_request=function()return not self.closed and not self.refresher.busy end,
+            error=function()return self.last_error end,
             scope_text=_('仅控制当前来源的内置漫画阅读器；两个开关独立保存，默认关闭。'),
         }),
     })
@@ -194,7 +202,10 @@ function Session:showMenu(return_to_reading)
 end
 
 function Session:close()
-    if self.closed then return end
+    if self.closed then
+        self.refresher:cancel();self:_closeControls()
+        return
+    end
     self.closed=true;self.refresher:stop();self:_closeControls();self.return_to_reading=nil
     for _,entry in pairs(self.images)do entry.controller:detach()end
     self.images={}

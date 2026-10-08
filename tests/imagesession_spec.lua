@@ -11,7 +11,7 @@ local function setup(data)
     local image={getSize=function()return{w=2,h=2}end,paintTo=function(_,target,x,y)target:blitFrom(source,x,y,0,0,2,2)end}
     local target=BB.new(2,2)
     local function paint(token)session:attachImage(image,token);image:paintTo(target,0,0)end
-    return session,store,paint,function(v)ready=v end,function()session:close();source:free();target:free()end,owner,image
+    return session,store,paint,function(v)ready=v end,function()session:close();source:free();target:free()end,owner,image,target
 end
 test('external defaults are off and do not read host global true',function()
     G_reader_settings=Support.store{graydither_enabled=true,graydither_refresh_enabled=true}
@@ -29,6 +29,12 @@ test('loading pause preserves screen count and token across fetching next page',
     local s,_,paint,_,close=setup{graydither_refresh_enabled=true,graydither_refresh_interval=2}
     paint('one');s:pause(true);s:resume();paint('two');eq(s.refresher.count,1)
     s:pause(true);s:resume();paint('three');UI:advance(0);eq(s.refresher.completed,1);close()
+end)
+test('pausing refresh preserves the grayscale of retained visible body',function()
+    local s,_,paint,ready,close,_,_,target=setup{graydither_enabled=true}
+    paint('one');local before=BB.tostring(target)
+    ready(false);s:pause(true);paint('one');eq(BB.tostring(target),before)
+    eq(s.last_token,'one');eq(s.refresher.count,0);close()
 end)
 test('normal pause resume and settings change rebuild the baseline and cancel tasks',function()
     local s,_,paint,_,close=setup{graydither_refresh_enabled=true,graydither_refresh_interval=1}
@@ -58,11 +64,22 @@ test('manual refresh closes common controls and returns to body before request',
 end)
 test('failed menu persistence keeps defaults and reports without crashing',function()
     local s,store,_,_,close=setup();store.saveSetting=function()error('disk full')end
-    eq(pcall(s:getMenuItems()[1].callback),true);eq(s.preferences:isEnabled(),false);assert(s.last_error);close()
+    eq(pcall(s:getMenuItems()[1].callback),true);eq(s.preferences:isEnabled(),false);assert(s.last_error)
+    s:getMenuItems()[2].sub_item_table[6].callback()
+    assert(UI.shown[#UI.shown].text:find('上次操作未完成',1,true));close()
 end)
 test('two session stores stay independent',function()
     local a=Session.new{owner={},store=Support.store()};local b=Session.new{owner={},store=Support.store()}
     a:getMenuItems()[1].callback();eq(a.preferences:isEnabled(),true);eq(b.preferences:isEnabled(),false)
     a:getMenuItems()[2].sub_item_table[2].callback();eq(a.refresh_preferences:getEnabled(),true)
     eq(b.refresh_preferences:getEnabled(),false);a:close();b:close()
+end)
+
+test('transient menu or spin close error is retried and shutdown remains idempotent',function()
+    for _,spin in ipairs({false,true})do
+        local s,_,_,_,close,owner=setup();s:showMenu()
+        if spin then s:getMenuItems()[2].sub_item_table[3].callback()end
+        UI.fail_once='close';s:close();eq(s.closed,true);eq(UI:getTopmostVisibleWidget(),owner)
+        eq(#UI.stack,1);eq(#UI.tasks,0);s:close();eq(#UI.stack,1);close()
+    end
 end)

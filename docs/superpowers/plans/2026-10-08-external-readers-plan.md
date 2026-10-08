@@ -52,10 +52,10 @@
 
 **Produces:** ImagePipeline.attach契约。
 
-- [ ] 写失败用例：关闭保留原图及返回值；FS黄金值输出与缓存独立；未绘制背景／透明／夜间／旋转；host软件抖动只路由普通合成，Screen值不变；异常释放并回退；后装包装保留。
-- [ ] 复跑确认失败来自缺模块／缺行为。
-- [ ] 实现私有ROI及局部目标绘制适配，调用真实ImageWidget语义，复用Algorithm.apply；禁止缓存原图变更与全局类覆盖。
-- [ ] 完整灰度套件及真实ImageWidget合同通过，提交本任务。
+- [x] 写失败用例：关闭保留原图及返回值；FS黄金值输出与缓存独立；未绘制背景／透明／夜间／旋转；host软件抖动只路由普通合成，Screen值不变；异常释放并回退；后装包装保留。
+- [x] 复跑确认失败来自缺模块／缺行为。
+- [x] 实现私有ROI及局部目标绘制适配，调用真实ImageWidget语义，复用Algorithm.apply；禁止缓存原图变更与全局类覆盖。
+- [x] 完整灰度套件及真实ImageWidget合同通过，提交本任务。
 
 ### Task2：外部阅读会话与公共菜单
 
@@ -64,9 +64,9 @@
 **Consumes:** Task1 ImagePipeline.attach；既有Settings/RefreshSettings/Refresh。
 **Produces:** 上述createImageSession和session契约。
 
-- [ ] 写失败行为：FileManager创建不访问document；源开关false不继承全局true；独立偏好、首次／重复token不计、逻辑屏变化计数；settings取消、嵌入设置拒绝、暂停／关闭／插件停止撤销；手动返回正文后full；保留原生文档套件。
-- [ ] 确认RED后实现会话、必要is_ready guard和菜单；服务从PluginLoader实例获取，停用关闭会话。
-- [ ] 复跑全套及真实UI调度／黑白取消合同，提交。
+- [x] 写失败行为：FileManager创建不访问document；源开关false不继承全局true；独立偏好、首次／重复token不计、逻辑屏变化计数；settings取消、嵌入设置拒绝、暂停／关闭／插件停止撤销；手动返回正文后full；保留原生文档套件。
+- [x] 确认RED后实现会话、必要is_ready guard和菜单；服务从PluginLoader实例获取，停用关闭会话。
+- [x] 复跑全套及真实UI调度／黑白取消合同，提交。
 
 ### Task3：MangaWeb接入（独立工作树）
 
@@ -74,10 +74,10 @@
 
 **Consumes:** Task2外部会话契约。
 
-- [ ] 先建立当前0.8.83源码与相关既有reader tests基准，所有原工作文件保持。
-- [ ] RED：global true下两个新开关仍false；保存与重启；服务缺失继续绘制；局部正文与稳定token接入；embedded_controls/loading/error/released暂停；更新／返回／关闭及休眠的取消；源授权路径继续使用既有入口。
-- [ ] 从官方PluginLoader能力探测，传Adapter.reader_widget，store适配源reader偏好；正文ImageWidget包装、菜单入口及事件；对实际实现存在的分片／平移状态取稳定token，不新增这些显示功能。
-- [ ] 源阅读行为与新行为套件通过，记录RED/GREEN和变动文件，提交。
+- [x] 先建立当前0.8.83源码与相关既有reader tests基准，所有原工作文件保持。
+- [x] RED：global true下两个新开关仍false；保存与重启；服务缺失继续绘制；局部正文与稳定token接入；embedded_controls/loading/error/released暂停；更新／返回／关闭及休眠的取消；源授权路径继续使用既有入口。
+- [x] 从官方PluginLoader能力探测，传Adapter.reader_widget，store适配源reader偏好；正文ImageWidget包装、菜单入口及事件；对实际实现存在的分片／平移状态取稳定token，不新增这些显示功能。
+- [x] 源阅读行为与新行为套件通过，记录RED/GREEN和变动文件，提交。
 
 ### Task4：WebDAV漫画接入（独立工作树）
 
@@ -85,19 +85,19 @@
 
 **Consumes:** Task2外部会话契约。
 
-- [ ] 先完整既有WebDAV所属基准（脚本--all）；失败如为宿主缺失明确隔离，不隐瞒。
-- [ ] RED：默认关闭／单独持久化、服务无／禁用／异常回退；普通／象限／长条／分格局部正文attach；稳定屏token覆盖index/segment/pan/point/panel；设置、加载、重绘不计；关闭／休眠取消；每页全刷与动画仅在服务实际接管时临时停用。
-- [ ] 最终shell统一接入，owner为shell.widget、ready依赖page模型；prefs独立保存，旧full_refresh_each_page值不改。
-- [ ] 全套及相关reader退出／动画／长条／分格回归通过，提交。
+- [x] 先完整既有WebDAV所属基准（脚本--all）；失败如为宿主缺失明确隔离，不隐瞒。
+- [x] RED：默认关闭／单独持久化、服务无／禁用／异常回退；普通／象限／长条／分格局部正文attach；稳定屏token覆盖index/segment/pan/point/panel；设置、加载、重绘不计；关闭／休眠取消；每页全刷与动画仅在服务实际接管时临时停用。
+- [x] 最终shell统一接入，owner为shell.widget、ready依赖page模型；prefs独立保存，旧full_refresh_each_page值不改。
+- [x] 全套及相关reader退出／动画／长条／分格回归通过，提交。
 
 ### Task5：整合与独立审查／包验收
 
 **Files:** 三仓库README／版本、包合同及升级说明；gray docs/external-readers-verification.md与执行记录。
 
-- [ ] 用真实两个源shell与Gray会话＋固定BlitBuffer/ImageWidget/UIManager运行跨仓库合同；default-off、开关隔离、生命周期与原刷新恢复验证。
-- [ ] 新上下文只读审查完整代码、缓冲归属、事件边界、设置与测试。重要发现写失败复现再修复，全套通过。
-- [ ] 构建三个设备测试安装包，检查只有运行文件、名称版本、CRC／hash、源包字节及解包测试；不捆绑开发fixture。
-- [ ] 整理给用户的安装顺序及验收方法；新发布影响在具体可审查产物完成后处理，不触碰真机。
+- [x] 用真实两个源shell与Gray会话＋固定BlitBuffer/ImageWidget/UIManager运行跨仓库合同；default-off、开关隔离、生命周期与原刷新恢复验证。
+- [x] 新上下文只读审查完整代码、缓冲归属、事件边界、设置与测试。重要发现写失败复现再修复，全套通过。
+- [x] 构建三个设备测试安装包，检查只有运行文件、名称版本、CRC／hash、源包字节及解包测试；不捆绑开发fixture。
+- [x] 整理给用户的安装顺序及验收方法；新发布影响在具体可审查产物完成后处理，不触碰真机。
 
 ## 执行与记录
 

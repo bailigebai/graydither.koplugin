@@ -117,6 +117,9 @@ function Menu.build(controller, prefs, options)
                     if controller.last_error then
                         lines[#lines + 1] = _("上次刷新未完成，可重试立即全刷；详情见阅读器日志。")
                     end
+                    if options.error and options.error() then
+                        lines[#lines + 1] = _("上次操作未完成，设置或灰度处理可能失败；详情见阅读器日志。")
+                    end
                     lines[#lines + 1] = _("原生全刷由设备适配执行；黑白辅助会闪屏，实际残影效果需真机对照。")
                     show(InfoMessage:new{ text = table.concat(lines, "\n") })
                 end,

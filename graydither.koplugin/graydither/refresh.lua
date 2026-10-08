@@ -86,6 +86,10 @@ end
 
 function Refresh:_ready()
     if not self.is_ready then return true end
+    -- The flash layer may still be topmost after its source window is destroyed.
+    -- Check window ownership through the public host API before either phase.
+    if type(UIManager.isWidgetShown) == "function"
+        and not UIManager:isWidgetShown(self.reader.dialog or self.reader) then return false end
     local ok, ready = pcall(self.is_ready)
     if not ok then self:_report(ready) end
     return ok and ready == true
