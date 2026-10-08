@@ -1,4 +1,4 @@
-# 漫画灰度与墨水屏刷新 0.3.0
+# 漫画灰度与墨水屏刷新 0.3.1
 
 KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供Floyd–Steinberg空间抖动，把256个输入亮度映射为16个输出灰阶。可改善某些图片的渐变观感，不代表屏幕拥有原生256灰阶。
 
@@ -6,7 +6,9 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 0.3.0新增MangaWeb与WebDAV漫画内置阅读器接入。两个阅读器各自保存“灰度抖动”和“自动全刷”开关，**默认都关闭**，互不影响，也不继承本插件的全局开关。图片在最终缩放后处理，算法和刷新流程由本插件统一提供。
 
-项目：[bailigebai/graydither.koplugin](https://github.com/bailigebai/graydither.koplugin)。0.3.0设备测试版下载：[GitHub Release](https://github.com/bailigebai/graydither.koplugin/releases/tag/v0.3.0)。安装时选择graydither-0.3.0.zip；旧版下载保留在[Releases](https://github.com/bailigebai/graydither.koplugin/releases)。
+0.3.1修复内置阅读器的刷新次数、保持时长等原生子窗口被共享设置遮挡的问题；设置窗口构造、显示和关闭异常会记录错误并保留或返回可用界面。数字弹窗使用加减按钮、长按和默认值按钮调整；退出后旧按钮不再修改设置，原阅读窗口的状态会恢复。安装本次交付的 `graydither-0.3.1.zip` 后完全退出并重启 KOReader。两来源已有接入版本可继续使用此共享服务，参数和默认开关保持一致。
+
+项目：[bailigebai/graydither.koplugin](https://github.com/bailigebai/graydither.koplugin)。本次0.3.1设备测试版安装包见[发布页](https://github.com/bailigebai/graydither.koplugin/releases/tag/v0.3.1)，改动和验收见[版本说明](https://github.com/bailigebai/graydither.koplugin/blob/main/docs/releases/v0.3.1.md)。WebDAV书架报E003时，需要同时更新WebDAV Manga 0.4.18；可直接下载[两个组件的完整修复套装](https://github.com/bailigebai/webdavmanga.koplugin/releases/tag/v0.4.18)。真机触控、刷新效果和稳定性仍待验收。
 
 ## 通过琪琪市场安装
 
@@ -33,7 +35,7 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 ## 安装
 
-1. 解压graydither-0.3.0.zip，得到graydither.koplugin文件夹。
+1. 解压graydither-0.3.1.zip，得到graydither.koplugin文件夹。
 2. 将整个文件夹放进当前KOReader数据目录的plugins文件夹，不要再多套一层目录。
 3. 重启KOReader，打开CBZ／CBR漫画。
 4. 在阅读菜单“工具 → 更多工具 → 漫画灰度抖动”中选择“本书：开启”。
@@ -53,7 +55,7 @@ KOReader独立插件，设备测试版。为MuPDF绘制的CBZ／CBR漫画提供F
 
 ## 两个漫画插件的内置阅读器
 
-接入版本：GrayDither 0.3.0、[MangaWeb](https://github.com/bailigebai/mangaweb.koplugin) 0.8.84、[WebDAV漫画](https://github.com/bailigebai/webdavmanga.koplugin) 0.4.16。同时安装三个版本的插件文件夹后，完全退出并重启KOReader，在插件管理里启用它们。只更新GrayDither不能为旧版内置阅读器增加设置入口。
+接入版本：GrayDither 0.3.0或以上、[MangaWeb](https://github.com/bailigebai/mangaweb.koplugin) 0.8.84、[WebDAV漫画](https://github.com/bailigebai/webdavmanga.koplugin) 0.4.16。同时安装支持接入的插件文件夹后，完全退出并重启KOReader，在插件管理里启用它们。只更新GrayDither不能为旧版内置阅读器增加设置入口。
 
 1. 通过漫画插件原来的入口打开漫画，在它自己的阅读设置中打开“灰度与全刷”。
 2. “启用漫画灰度抖动”和“启用自动全刷”可以分别开启／关闭；首次进入均未勾选。

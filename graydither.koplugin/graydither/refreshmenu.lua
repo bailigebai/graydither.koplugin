@@ -40,9 +40,12 @@ function Menu.build(controller, prefs, options)
                     return string.format(_("自动间隔：每 %d 次页面变化"), prefs:getInterval())
                 end,
                 callback = function(menu)
+                    -- Native table pickers use the same +/- controls without
+                    -- creating an anonymous keyboard dialog outside our owner.
+                    local choices={};for value=1,50 do choices[#choices+1]=value end
                     show(SpinWidget:new{
                         title_text = _("自动全刷间隔"),
-                        info_text = _("初始页和同页重复更新不计数；跳页算一次页面变化。"),
+                        value_table=choices,value_index=prefs:getInterval(),
                         value = prefs:getInterval(), value_min = 1, value_max = 50,
                         value_step = 1, value_hold_step = 5, default_value = 5,
                         ok_always_enabled = true,
@@ -82,14 +85,30 @@ function Menu.build(controller, prefs, options)
                 end,
                 enabled_func = function() return prefs:getMode() == "flash" end,
                 callback = function(menu)
+                    local choices,index,default={},nil,nil
+                    local current=prefs:getHold()
+                    local found=false
+                    for cents=10,100,5 do
+                        local value=cents/100
+                        -- Preserve values saved by the old arithmetic picker;
+                        -- float-to-string conversion can otherwise lose the index.
+                        if math.abs(value-current)<1e-9 then value=current;found=true end
+                        choices[#choices+1]=value
+                    end
+                    if not found then choices[#choices+1]=current end
+                    table.sort(choices)
+                    for position,value in ipairs(choices)do
+                        if value==current then index=position end
+                        if math.abs(value-0.30)<1e-9 then default=position end
+                    end
                     show(SpinWidget:new{
                         title_text = _("黑白保持时长"),
-                        info_text = _("黑白两阶段分别保持此时长，结束后恢复阅读页面。"),
+                        value_table=choices,value_index=index,
                         value = prefs:getHold(), value_min = 0.10, value_max = 1.00,
-                        value_step = 0.05, value_hold_step = 0.25,
-                        precision = "%0.2f", default_value = 0.30, ok_always_enabled = true,
+                        value_step = 1, value_hold_step = 5,
+                        precision = "%0.2f", default_value = default, ok_always_enabled = true,
                         callback = function(spin)
-                            prefs:setHold(spin.value)
+                            prefs:setHold(tonumber(spin.value))
                             changed(menu)
                         end,
                     })
@@ -103,6 +122,7 @@ function Menu.build(controller, prefs, options)
                         _("墨水屏刷新（设备测试版）"),
                         prefs:getEnabled() and _("自动全刷：开启") or _("自动全刷：关闭"),
                         string.format(_("保存的间隔：%d 次页面变化"), prefs:getInterval()),
+                        _("初始页和同页重复更新不计数；跳页算一次页面变化。"),
                         _("刷新方式：")..mode_text(),
                         _("本次已完成刷新次数：")..controller.completed,
                         options.scope_text or _("支持独立刷新当前阅读页面；灰度抖动仍限 CBZ／CBR。"),

@@ -94,5 +94,11 @@
     "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
     "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/widget/imagewidget.lua",
     "sha256": "57c1469ded4289ac76f0d4c66eac6b6ff2da764a2f3c374b6577964e6f8e6db7"
+  },
+  {
+    "file": "tests/fixtures/koreader/frontend/ui/widget/numberpickerwidget.lua",
+    "commit": "646b2e39e24a899016d38ef6dc47e3f7c429c8ba",
+    "url": "https://raw.githubusercontent.com/koreader/koreader/646b2e39e24a899016d38ef6dc47e3f7c429c8ba/frontend/ui/widget/numberpickerwidget.lua",
+    "sha256": "835225f9c13a1d12d2a830d815ce28b598aa7d6499e445140c3e01e95b197f2f"
   }
 ]
