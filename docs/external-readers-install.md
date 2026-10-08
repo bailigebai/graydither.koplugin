@@ -55,4 +55,6 @@ GrayDither 106项检查、MangaWeb 40组规格、WebDAV 193组规格及687项真
 
 在“qiqi 应用商店”联网点击“刷新缓存”，按graydither、mangaweb、webdavmanga查找并选择上述对应版本的插件ZIP。市场读取bailigebai账号下的公开.koplugin仓库和Release，无需新增收录名单。若还显示旧版本，先确认联网后再刷新缓存。
 
+已经安装旧版时，可进入市场更新管理，点“检查所有更新”。附件列表也会显示.sha256校验文件，安装应选择对应.zip；若项目说明仍旧，可在市场设置清理README缓存再重新打开。
+
 graydither-test.cbz是测试漫画，sample-preview.png是预览图，两者不是插件安装包。manifest.json记录三个安装包及测试素材的SHA-256校验值。
